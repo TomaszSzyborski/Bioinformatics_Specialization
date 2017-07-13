@@ -21,9 +21,12 @@ def approx_pattern_matching(kmer, genome, hamming_score):
 	return count
 
 if __name__ == '__main__':
-	lines = sys.stdin.read().splitlines() # read in the input from STDIN
-	genome_1 = lines[0].strip()
-	genome_2 = lines[1].strip()
-	number = int(lines[2].strip())
-	answer = approx_pattern_matching(genome_1,genome_2,number
+	#lines = sys.stdin.read().splitlines() # read in the input from STDIN
+	name = sys.argv[1]
+	with open(name, 'r') as f:
+		lines = f.readlines()
+		genome_1 = lines[0].strip()
+		genome_2 = lines[1].strip()
+		number = int(lines[2].strip())
+	answer = approx_pattern_matching(genome_1,genome_2,number)
 	print(answer)

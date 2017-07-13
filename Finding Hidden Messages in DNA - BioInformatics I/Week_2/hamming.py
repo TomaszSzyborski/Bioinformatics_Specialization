@@ -11,10 +11,13 @@ def hamming_distance(genome1,genome2):
 	return score
 
 if __name__ == '__main__':
-	lines = sys.stdin.read().splitlines() # read in the input from STDIN
+	# lines = sys.stdin.read().splitlines() # read in the input from STDIN
 
-	genome_1 = lines[0].strip()
-	genome_2 = int(lines[1].strip())
+	name = sys.argv[1]
+	with open(name, 'r') as f:
+		lines = f.readlines()
+		genome_1 = lines[0].strip()
+		genome_2 = lines[1].strip()
 
 	answer = hamming_distance(genome_1,genome_2)
 	print(answer)
