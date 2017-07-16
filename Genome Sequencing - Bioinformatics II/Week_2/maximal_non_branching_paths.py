@@ -513,11 +513,22 @@ def contigs_from_reads(kmers):
 if __name__ == '__main__':
     import sys
     file_name = sys.argv[1]
-    with open(file_name, "r") as f:
-        data = f.readlines()
+    with open(file_name) as input_data:
+        from collections import OrderedDict
+        edges = []
+        for edge in [line.strip().split(' -> ') for line in input_data.readlines()]:
+            if ',' in edge[1]:
+                a = int(edge[0])
+                b = (list(map(int,edge[1].split(','))))
+                edges.append((a,b))
+            else:
+                a = int(edge[0])
+                b = [int(edge[1])]
+                edges.append((a,b))
 
-    kmers = [k.strip() for k in data]
-    with open("contigs_from_reads.txt" , "w") as f:
-        a = contigs_from_reads(kmers)
-        # print a
-        f.write('\n'.join(a))
+    with open("maximal_non_branching_paths.txt" , "w") as f:
+        answer = maximal_non_branching_paths(edges)
+        to_write = []
+        for item in answer:
+            to_write.append(' -> '.join(list(map(str, item))))
+        f.write('\n'.join(to_write))

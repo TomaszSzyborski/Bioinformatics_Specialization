@@ -515,9 +515,8 @@ if __name__ == '__main__':
     file_name = sys.argv[1]
     with open(file_name, "r") as f:
         data = f.readlines()
-
-    kmers = [k.strip() for k in data]
-    with open("contigs_from_reads.txt" , "w") as f:
-        a = contigs_from_reads(kmers)
-        # print a
-        f.write('\n'.join(a))
+    kmers =[k.strip() for k in data]    
+    with open("reconsructed_from_kmers.txt" , "w") as f:
+        a = genome_reconstruction(kmers)
+        print a
+        f.write(''.join(a))

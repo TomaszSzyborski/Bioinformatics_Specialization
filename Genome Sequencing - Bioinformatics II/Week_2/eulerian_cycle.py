@@ -1,7 +1,7 @@
 import sys
 
 def eulerian_cycle(edge_dict):
-    current_node = edge_dict.keys()[0]
+    current_node = list(edge_dict.keys())[0]
     path = [current_node]
     while True:
         path.append(edge_dict[current_node][0])
@@ -16,13 +16,12 @@ def eulerian_cycle(edge_dict):
         else:
             break
     while len(edge_dict) > 0:
-        for i in xrange(len(path)):
+        for i in range(len(path)):
             if path[i] in edge_dict:
                 current_node = path[i]
                 cycle = [current_node]
                 while True:
                     cycle.append(edge_dict[current_node][0])
-
                     if len(edge_dict[current_node]) == 1:
                         del edge_dict[current_node]
                     else:
@@ -38,16 +37,18 @@ def eulerian_cycle(edge_dict):
     return path
 
 if __name__ == '__main__':
-    filename = sys.stdin.read().strip()
+    #filename = sys.stdin.read().strip()
+    file_name = input("State file name: ").strip()
     with open(file_name, 'r') as input_data:
-        edges = {}
+        from collections import OrderedDict
+        edges = OrderedDict()
         for edge in [line.strip().split(' -> ') for line in input_data.readlines()]:
             if ',' in edge[1]:
-                edges[int(edge[0])] = map(int,edge[1].split(','))
+                edges[int(edge[0])] = list(map(int,edge[1].split(',')))
             else:
                 edges[int(edge[0])] = [int(edge[1])]
     #print edges
     path = eulerian_cycle(edges)
-    print('->'.join(map(str,path)))
-    with open('ans.txt', 'w') as output_data:
-        output_data.write('->'.join(map(str,path)))
+    # print('->'.join(list(map(str,path))))
+    with open('answer_eulerian_cycle.txt', 'w') as output_data:
+        output_data.write('->'.join(list(map(str,path))))

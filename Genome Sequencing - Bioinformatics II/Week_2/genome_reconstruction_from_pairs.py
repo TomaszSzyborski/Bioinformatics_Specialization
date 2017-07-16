@@ -516,8 +516,12 @@ if __name__ == '__main__':
     with open(file_name, "r") as f:
         data = f.readlines()
 
-    kmers = [k.strip() for k in data]
-    with open("contigs_from_reads.txt" , "w") as f:
-        a = contigs_from_reads(kmers)
-        # print a
-        f.write('\n'.join(a))
+    k, d = list(map(int, data[0].split()))
+    rest = data[1:]
+    pairs = []
+    for entry in rest:
+        pairs.append(tuple(entry.strip().split('|')))
+    with open("reconsructed.txt" , "w") as f:
+        a = genomes_reconstruction_from_pair(k, d, pairs)
+        print a
+        f.write(''.join(a))
